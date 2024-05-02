@@ -56,15 +56,15 @@ class BookingSchedulerTest(unittest.TestCase):
 
     def test_예약완료시_SMS는_무조건_발송(self):
         #arrange
-        testable_sms_sender = TestableSmsSender()
         schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
-        self.booking_scheduler.set_sms_sender(testable_sms_sender)
+        self.testable_sms_sender = TestableSmsSender()
+        self.booking_scheduler.set_sms_sender(self.testable_sms_sender)
 
         # act
         self.booking_scheduler.add_schedule(schedule)
 
         # assert
-        self.assertTrue(testable_sms_sender.is_send_method_is_called())
+        self.assertTrue(self.testable_sms_sender.is_send_method_is_called())
 
     def test_이메일이_없는_경우에는_이메일_미발송(self):
         pass
