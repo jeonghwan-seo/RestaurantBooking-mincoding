@@ -14,13 +14,15 @@ CUSTOMER = Customer("Fake name", "010-1234-5678")
 
 class BookingSchedulerTest(unittest.TestCase):
 
+    def setUp(self):
+        self.booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR)
+
     def test_예약은_정시에만_가능하다_정시가_아닌경우_예약불가(self):
         # arrange
         schedule = Schedule(NOT_ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
 
         # act and assert
         with self.assertRaises(ValueError):
-            self.booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR)
             self.booking_scheduler.add_schedule(schedule)
 
     def test_예약은_정시에만_가능하다_정시인_경우_예약가능(self):
@@ -28,7 +30,6 @@ class BookingSchedulerTest(unittest.TestCase):
         schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
 
         # act
-        self.booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR)
         self.booking_scheduler.add_schedule(schedule)
 
         # assert
